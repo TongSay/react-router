@@ -6,7 +6,7 @@ const OrderSummary = () => {
   return (
     <>
     <div> Order Confirm </div>
-    <button onClick={() => navigate(-1)}>Go Back</button>
+    <button onClick={() => navigate(-1)}>Go back</button>
     </>
   )
 }
