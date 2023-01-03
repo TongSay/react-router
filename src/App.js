@@ -10,13 +10,18 @@ import NewProduct from './components/NewProduct';
 import Users from './components/Users';
 import UserDetail from './components/UserDetail';
 import Admin from './components/Admin';
+import Profile from './components/Profile';
 import React from 'react';
+import { AuthProvider } from './components/auth';
+import Login from './components/Login';
+import RequireAuth from './components/RequireAuth';
 
 const LazyAbout = React.lazy(() => import('./components/About'));
 
 function App() {
   return (
     <>
+    <AuthProvider>
      <Navbar />
     <Routes>
       <Route path='/' element={<Home />}></Route>
@@ -26,18 +31,29 @@ function App() {
           <LazyAbout />
         </React.Suspense>
         }></Route>
+
+      {/* ===== Lazy Loadding ==== */}
       <Route path='order-summary' element={<OrderSummary />}></Route>
       <Route path='products' element={<Products />}>
         <Route index element={<FeaturedProduct/>} ></Route>
         <Route path='featured' element= {<FeaturedProduct/>}></Route>
         <Route path='new' element= {<NewProduct/>}></Route>
       </Route>
+      {/* ===== End Lazy Loadding ==== */}
+
+
       <Route path='users' element={<Users />}>
         <Route path=':userId' element={<UserDetail />}></Route>
         <Route path='admin' element={<Admin />}></Route>
       </Route>
+
+      {/* ===== Authdentication ==== */}
+      <Route path='profile' element={ <RequireAuth> <Profile /> </RequireAuth> } ></Route>
+      <Route path='login' element={<Login />} ></Route>
+
       <Route path='*' element={<NoMatch />}></Route>
     </Routes>
+    </AuthProvider>
     </>
   );
 }
